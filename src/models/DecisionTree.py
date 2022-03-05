@@ -140,6 +140,7 @@ if __name__ == '__main__':
     model = DecisionTree(data=tmp.data)
     model.fit(X_train, y_train)
     model.predict(X_test, y_test)
+    
     print("Accuracy on train dataset: ", model.accuracy)    
     print("Accuracy on test dataset: ", model.acc)      
     print("F1 score: ", model.f1)
