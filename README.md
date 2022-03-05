@@ -1,6 +1,12 @@
 # About data
 
+## Dataset 1
+<li> Create a model for predicting mortality caused by Heart Failure. (Labels are not balanced, consider using f1-score instead of accuracy)
 https://www.kaggle.com/andrewmvd/heart-failure-clinical-data
+
+## Dataset 2
+<li> Create a model for predicting complitacions during surgery. (Labels are not balanced, consider using f1-score instead of accuracy)
+https://www.kaggle.com/omnamahshivai/surgical-dataset-binary-classification
 
 
 
@@ -17,7 +23,8 @@ https://www.kaggle.com/andrewmvd/heart-failure-clinical-data
 
 1. Run in terminal <code> python main.py -m DecisionTree -d data/dataset1.csv </code>
 2. This is what you get:
-Sample photo: ![Screenshot1](/images/s1.png)
+Sample photo: 
+![Screenshot1](/images/s1.png)
 
 
 # Limitations 

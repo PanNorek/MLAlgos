@@ -1,17 +1,16 @@
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score,roc_auc_score, f1_score, precision_score, recall_score,confusion_matrix
-from sklearn.model_selection import cross_validate
 import sys,os
 import pandas as pd
 
-class KNN:
+class SVCModel:
     """
-    A decision tree classifier.
-    Consider if you can use KNN for mixed data (categorical and numerical).
+    Support Vector Classification model.
+    """
     
-    """
+    
 
-    def __init__(self,n_neighbors = 3, **kwargs):
+    def __init__(self, class_weight:str=None, **kwargs):
         # min_samples_split:int=2, min_samples_leaf:int=1, min_impurity_decrease:float=0.0, max_depth:int=None 
         """
         Initializes the decision tree classifier.
@@ -19,10 +18,9 @@ class KNN:
             criterion: measure of disorder
             class_weight: weight of the classes e.g. "balanced"
         """
-        self.n_neighbors = n_neighbors
-        
+        self.class_weight = class_weight
         self.__dict__.update(kwargs)
-        self.model = KNeighborsClassifier(n_neighbors=self.n_neighbors)
+        self.model = SVC()
     
     def fit(self, X:pd.DataFrame, y:pd.Series)->None:
         """
@@ -111,31 +109,11 @@ class KNN:
                 The all the metrics of the model
         """
         return pd.DataFrame({'accuracy':[self.accuracy],'f1':[self.f1],'recall':[self.recall],'precision':[self.precision]})
-    def cross_validate(self, X:pd.DataFrame, y:pd.Series, n_splits:int=10)->pd.DataFrame:
-        """
-        Returns the cross validation scores of the model.
-        Args:
-            X: The data to cross validate.
-            y: The labels to cross validate.
-            n_splits: The number of splits to use.
-        Returns:
-            The cross validation scores of the model.
-        """
-        
-        
-        scores = cross_validate(self.model, X, y, cv=n_splits, scoring = ["accuracy", "precision", "recall", "f1"])
-        return pd.DataFrame(scores, index = range(1, n_splits+1))
-
-    def cross_validate_mean(self, X:pd.DataFrame, y:pd.Series, n_splits:int=10)->pd.DataFrame:
-        """
-        Returns the cross validation mean of the model.
-        """
-        return pd.DataFrame(self.cross_validate( X, y, n_splits).mean()[2:]).transpose()
-   
+    
+    
 
 if __name__ == '__main__':
     args = sys.argv[1:]
-
 
     data_prep_dir = (os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     + '/data_preparation/')
@@ -143,7 +121,8 @@ if __name__ == '__main__':
     from DataPreparator import DataPreparator
 
 
-
+    
+    # path: data/dataset1.csv
     tmp = DataPreparator(args[0][1:])
 
     tmp.one_hot_encode()
@@ -152,16 +131,13 @@ if __name__ == '__main__':
 
     X_train, X_test, y_train, y_test = tmp.X_train, tmp.X_test, tmp.y_train, tmp.y_test
 
-    model = KNN(data=tmp.data)
+    model = SVCModel(data=tmp.data)
     model.fit(X_train, y_train)
     model.predict(X_test, y_test)
-
+    
     print("Accuracy on train dataset: ", model.accuracy)    
     print("Accuracy on test dataset: ", model.acc)      
     print("F1 score: ", model.f1)
     print("Recall score: ", model.recall)
     print("Precision score: ", model.precision)
     print("Confusion matrix: \n", model.get_confusion_matrix(y_test))
-    print(model.cross_validate_mean(X_train, y_train))
-    
-   

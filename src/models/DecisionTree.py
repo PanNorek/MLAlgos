@@ -132,7 +132,8 @@ if __name__ == '__main__':
     tmp = DataPreparator(args[0][1:])
 
     tmp.one_hot_encode()
-    tmp.train_test_split('DEATH_EVENT')
+    # tmp.train_test_split('DEATH_EVENT')
+    tmp.train_test_split(args[1])
     tmp.scale()
 
     X_train, X_test, y_train, y_test = tmp.X_train, tmp.X_test, tmp.y_train, tmp.y_test
@@ -140,7 +141,6 @@ if __name__ == '__main__':
     model = DecisionTree(data=tmp.data)
     model.fit(X_train, y_train)
     model.predict(X_test, y_test)
-    
     print("Accuracy on train dataset: ", model.accuracy)    
     print("Accuracy on test dataset: ", model.acc)      
     print("F1 score: ", model.f1)

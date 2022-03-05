@@ -163,7 +163,7 @@ if __name__ == '__main__':
     tmp = DataPreparator(args[0][1:])
 
     tmp.one_hot_encode()
-    tmp.train_test_split('DEATH_EVENT')
+    tmp.train_test_split(args[1])
     tmp.scale()
 
     X_train, X_test, y_train, y_test = tmp.X_train, tmp.X_test, tmp.y_train, tmp.y_test
