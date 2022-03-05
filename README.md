@@ -13,6 +13,13 @@ https://www.kaggle.com/andrewmvd/heart-failure-clinical-data
 <li>Install the dependencies using <code> pip install -r requirements.txt </code>
 <li>Check possibilities <code> python main.py -h </code> or run default <code> python main.py </code>
 
+# Example
+
+1. Run in terminal <code> python main.py -m DecisionTree -d data/dataset1.csv </code>
+2. This is what you get:
+Sample photo: ![Screenshot1](/images/s1.png)
+
+
 # Limitations 
 
 1. Dataset must be preprocessed and cleaned (no missing values, no outliers, no duplicates). 
