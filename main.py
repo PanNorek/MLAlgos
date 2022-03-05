@@ -1,22 +1,15 @@
-from src.data_preparation.DataPreparator import DataPreparator
-from src.models.DecisionTree import DecisionTree
+from ArgHelper import arg_helper
+import os
 
+if __name__ == '__main__':
+    args = arg_helper()
+    print(args)
+    selected_model = args['model']
+    data_path = args['data']
+    
+    os.system(f"python ./src/models/{selected_model}.py ../{data_path}")
+    
+    
 
-tmp = DataPreparator('data/heart_failure_clinical_records_dataset.csv')
-
-tmp.one_hot_encode()
-tmp.train_test_split('DEATH_EVENT')
-tmp.scale()
-
-X_train, X_test, y_train, y_test = tmp.X_train, tmp.X_test, tmp.y_train, tmp.y_test
-
-model = DecisionTree()
-model.fit(X_train, y_train)
-print(model.accuracy)      
-model.predict(X_test, y_test)
-print(model.acc)      
-print(model.f1)
-print(model.recall)
-print(model.auc)
 
 
